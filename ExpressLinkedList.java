@@ -18,7 +18,7 @@ class Node <E> {
 	}
 }
 
-public class ExpressLinkedList <E> {
+public class ExpressLinkedList <E> implements List<E>{
 	private final E DEFAULT_VALUE; //default value for all nodes on the list
 	private int size; //number of elements or number of nodes on the list
 	
@@ -64,26 +64,6 @@ public class ExpressLinkedList <E> {
 		}
 		
 		return true;
-	}
-
-	public void display(){
-		if(head == null) return;
-		// Node<E> cur = tail;
-		Node<E> cur = head;
-		while(true){
-			System.out.println("Traverse the node: " + cur.data);
-			if(cur.jump != null)
-				System.out.println("The refered node: " + cur.jump.data);
-			else{
-				System.out.println("Next refers to null");
-			}
-
-			System.out.println("---------------------");
-
-			if(cur == tail) return;
-			// cur = cur.prev;
-			cur = cur.next;
-		}
 	}
 
 	// @Override
@@ -183,6 +163,28 @@ public class ExpressLinkedList <E> {
 		return cur.data;
 	}
 
+	public Node<E> getNode(int index) {
+		if (index < 0 || index >= this.size())
+			throw new IndexOutOfBoundsException();
+		if (head == null) return null;
+
+		int temp_index = index;
+		int idx = 0;
+		while(temp_index >= 10) temp_index -= 10;
+
+		Node<E> cur = head;
+		while(idx < temp_index) {
+			idx++;
+			cur = cur.next;
+		}
+
+		while(idx != index){
+			cur = cur.jump;
+			idx += 10;
+		}
+		return cur;
+	}
+
 	
 	// @Override
 	public int size() {
@@ -190,172 +192,204 @@ public class ExpressLinkedList <E> {
 	}
 
 	// @Override
-	// public boolean addAll(Collection<? extends E> c) {
-	// 	throw new UnsupportedOperationException();
-	// }
-
-	// @Override
-	// public boolean addAll(int index, Collection<? extends E> c) {
-	// 	throw new UnsupportedOperationException();
-	// }
-
-	// @Override
-	// public void clear() {
-	// 	map.clear();
-	// 	this.size = 0;
-	// }
-
-	// @Override
-	// public boolean contains(Object o) {
-	// 	return map.containsValue(o);
-	// }
-
-	// @Override
-	// public boolean containsAll(Collection<?> c) {
-	// 	throw new UnsupportedOperationException();
-	// }
-
-
-	// @Override
-	// public int indexOf(Object o) {
-	// 	throw new UnsupportedOperationException();
-	// }
-
-	// @Override
-	// public boolean isEmpty() {
-	// 	return this.size == 0;
-	// }
-
-	// @Override
-	// public Iterator<E> iterator() {
-	// 	throw new UnsupportedOperationException();
-	// }
-
-	// @Override
-	// public int lastIndexOf(Object o) {
-	// 	throw new UnsupportedOperationException();
-	// }
-
-	// @Override
-	// public ListIterator<E> listIterator() {
-	// 	throw new UnsupportedOperationException();
-	// }
-
-	// @Override
-	// public ListIterator<E> listIterator(int index) {
-	// 	throw new UnsupportedOperationException();
-	// }
-
-	// @Override
-	// public boolean remove(Object o) {
-	// 	throw new UnsupportedOperationException();
-	// }
-
-	// @Override
-	// public E remove(int index) {
-	// 	if (index < 0 || index >= this.size())
-	// 		throw new IndexOutOfBoundsException();
-		
-	// 	E removed = map.remove(index);
-	// 	for (int i = index; i < this.size-1; i++){
-	// 		if (map.containsKey(i + 1))
-	// 			map.put(i, map.get(i + 1));
-	// 		else
-	// 			map.remove(i);
-	// 	}
-	// 	map.remove(this.size - 1);
-	// 	this.size--;
-	// 	return removed;
-	// }
-
-	// @Override
-	// public boolean removeAll(Collection<?> c) {
-	// 	throw new UnsupportedOperationException();
-	// }
-
-	// @Override
-	// public boolean retainAll(Collection<?> c) {
-	// 	throw new UnsupportedOperationException();
-	// }
-
-	// @Override
-	// public E set(int index, E element) {
-	// 	if (index < 0 || index >= this.size())
-	// 		throw new IndexOutOfBoundsException();
-	// 	E oldValue = map.get(index);
-	// 	map.put(index, element);
-	// 	return oldValue;
-	// }
-
-
-	// @Override
-	// public List<E> subList(int fromIndex, int toIndex) {
-	// 	throw new UnsupportedOperationException();
-	// }
-
-	// @Override
-	// public Object[] toArray() {
-	// 	Object [] array = new Object[this.size];
-	// 	for (int i = 0; i < this.size; i++){
-	// 		if (map.containsKey(i))
-	// 			array[i] = map.get(i);
-	// 		else
-	// 			array[i] = this.DEFAULT_VALUE;
-	// 	}
-	// 	return array;
-	// }
-
-	// @SuppressWarnings("unchecked")
-	// @Override
-	// public <T> T[] toArray(T[] a) {
-	// 	if (!a.getClass().getComponentType().isAssignableFrom(this.DEFAULT_VALUE.getClass()))
-	// 		throw new ArrayStoreException();
-		
-	// 	if (a.length < this.size) a = Arrays.copyOf(a, this.size);
-	// 	for (int i = 0; i < this.size; i++){
-	// 		if (map.containsKey(i)) 
-	// 			a[i] = (T) map.get(i);
-	// 		else 
-	// 			a[i] = (T) this.DEFAULT_VALUE;
-	// 	}
-	// 	return a;
-	// }
-
-	
-	// @Override
-	// public String toString(){
-	// 	if (this.size == 0) return "[]"; 
-	// 	StringBuilder sb = new StringBuilder();
-	// 	sb.append('[');
-	// 	for (int i = 0; i < this.size - 1; i++){
-	// 		E value = (E) this.map.get(i);
-	// 		if (value != null) 
-	// 			sb.append(value);
-	// 		else 
-	// 			sb.append(this.DEFAULT_VALUE);
-	// 		sb.append(", ");
-	// 	}
-
-	// 	E value = (E) this.map.get(this.size - 1);
-	// 	if (value != null) 
-	// 		sb.append(value);
-	// 	else 
-	// 		sb.append(this.DEFAULT_VALUE);
-	// 	//sb.append(map.get(this.size - 1));
-	// 	sb.append(']');
-	// 	return sb.toString(); //+ " " + map.toString();
-	// }
-
-	public static void main(String[] args){
-		ExpressLinkedList<Integer> ll = new ExpressLinkedList<>(-1);
-
-		for(int i = 150; i >=0 ; i--) {
-			if( i==4) continue;
-			ll.add(0, i);
+	public void clear() {
+		if(head == null) return;
+		Node<E> cur = head;
+		while(cur != null){
+			Node<E> temp = cur;
+			cur = cur.next;
+			temp.prev = null;
+			temp.next = null;
+			temp = null;
 		}
 
-		ll.add(4, 4);
-
-		System.out.println(ll.get(100));
+		this.size = 0;
+		this.head = this.tail = null;
 	}
+		
+	// @Override
+	public String toString(){
+		if (this.size == 0) return "[]"; 
+		StringBuilder sb = new StringBuilder();
+		sb.append('[');
+		Node<E> cur = head;
+		while(cur != tail) {
+			E value = cur.data;
+			if (value != null) 
+				sb.append(value);
+			else 
+				sb.append(this.DEFAULT_VALUE);
+			sb.append(", ");
+			cur = cur.next;
+		}
+
+		E value = tail.data;
+		if (value != null) 
+			sb.append(value);
+		else 
+			sb.append(this.DEFAULT_VALUE);
+
+		sb.append(']');
+		return sb.toString(); //+ " " + map.toString();
+	}
+
+	// @Override
+	public E remove(int index) {
+		if (index < 0 || index >= this.size())
+			throw new IndexOutOfBoundsException();
+		
+		Node<E> removed_node = getNode(index);
+		if(removed_node == head){
+			Node<E> temp = head;
+			head = head.next;
+			head.prev = null;
+			temp.next = null;
+			temp.jump = null;
+			temp = null;
+		}else if (removed_node == tail){
+			int idx = this.size - 10;
+			Node<E> temp = getNode(idx);
+			temp.jump = null;
+			temp = tail;
+			tail = tail.prev;
+			tail.next = null;
+			temp.prev = null;
+			temp = null;
+		}else{
+			Node<E> prev_node = removed_node.prev;
+			Node<E> next_node = removed_node.next;
+			removed_node.next = null;
+			removed_node.jump = null;
+			removed_node.prev = null;
+
+			prev_node.next = next_node;
+			next_node.prev = prev_node;
+			Node<E> before = head;
+			Node<E> after = head.jump;
+			if(after != null) after = after.next;
+			while(after != null){
+				before.jump = after;
+				before = before.next;
+				after = after.next;
+			}
+		}
+		
+		this.size--;
+		return removed_node.data;
+	}
+
+	
+	public void display(){
+		if(head == null) return;
+		// Node<E> cur = tail;
+		Node<E> cur = head;
+		while(true){
+			System.out.println("Traverse the node: " + cur.data);
+			if(cur.jump != null)
+				System.out.println("The refered node: " + cur.jump.data);
+			else{
+				System.out.println("Next refers to null");
+			}
+
+			System.out.println("---------------------");
+
+			if(cur == tail) return;
+			// cur = cur.prev;
+			cur = cur.next;
+		}
+	}
+	@Override
+	public boolean addAll(Collection<? extends E> c) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean addAll(int index, Collection<? extends E> c) {
+		throw new UnsupportedOperationException();
+	}
+
+
+
+	@Override
+	public boolean contains(Object o) {
+		return true;
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		throw new UnsupportedOperationException();
+	}
+
+
+	@Override
+	public int indexOf(Object o) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return this.size == 0;
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int lastIndexOf(Object o) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public ListIterator<E> listIterator() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public ListIterator<E> listIterator(int index) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		throw new UnsupportedOperationException();
+	}
+
+	
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public E set(int index, E element) {
+		
+		return null;
+	}
+
+
+	@Override
+	public List<E> subList(int fromIndex, int toIndex) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public <T> T[] toArray(T[] a) {
+		return null;
+	}
+
+	@Override
+	public Object[] toArray() {
+		return null;
+	}
+
+
+
 }
