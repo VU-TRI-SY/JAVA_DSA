@@ -80,7 +80,7 @@ public class ExpressLinkedList <E> {
 
 			System.out.println("---------------------");
 
-			if(cur == head) return;
+			if(cur == tail) return;
 			// cur = cur.prev;
 			cur = cur.next;
 		}
@@ -333,13 +333,12 @@ public class ExpressLinkedList <E> {
 	public static void main(String[] args){
 		ExpressLinkedList<Integer> ll = new ExpressLinkedList<>(-1);
 
-		// for(int i = 15; i >=0 ; i--) {
-		// 	if( i==4) continue;
-		// 	ll.add(0, i);
-		// }
+		for(int i = 15; i >=0 ; i--) {
+			if( i==4) continue;
+			ll.add(0, i);
+		}
 
-		// ll.add(4, 4);
-		for(int i = 0; i <= 15; i++) ll.add(i);
+		ll.add(4, 4);
 
 		ll.display();
 
