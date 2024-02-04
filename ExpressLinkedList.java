@@ -163,8 +163,24 @@ public class ExpressLinkedList <E> {
 	public E get(int index) {
 		if (index < 0 || index >= this.size())
 			throw new IndexOutOfBoundsException();
-		// if(index >= 0)
-		return null;
+		if (head == null) return null;
+
+
+		int temp_index = index;
+		int idx = 0;
+		while(temp_index >= 10) temp_index -= 10;
+
+		Node<E> cur = head;
+		while(idx < temp_index) {
+			idx++;
+			cur = cur.next;
+		}
+
+		while(idx != index){
+			cur = cur.jump;
+			idx += 10;
+		}
+		return cur.data;
 	}
 
 	
@@ -333,14 +349,13 @@ public class ExpressLinkedList <E> {
 	public static void main(String[] args){
 		ExpressLinkedList<Integer> ll = new ExpressLinkedList<>(-1);
 
-		for(int i = 15; i >=0 ; i--) {
+		for(int i = 150; i >=0 ; i--) {
 			if( i==4) continue;
 			ll.add(0, i);
 		}
 
 		ll.add(4, 4);
 
-		ll.display();
-
+		System.out.println(ll.get(100));
 	}
 }
